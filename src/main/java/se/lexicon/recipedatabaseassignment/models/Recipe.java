@@ -1,25 +1,37 @@
 package se.lexicon.recipedatabaseassignment.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 @Entity
 public class Recipe {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String recipeName;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     List<RecipeIngredient> recipeIngredients;
     @OneToOne
     RecipeInstruction instruction;
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     Set<RecipeCategory> categories;
+
+    public Recipe() {
+    }
 
     public Recipe(String recipeName, List<RecipeIngredient> recipeIngredients, RecipeInstruction instruction, Set<RecipeCategory> categories) {
         this.recipeName = recipeName;
         this.recipeIngredients = recipeIngredients;
         this.instruction = instruction;
         this.categories = categories;
+    }
+
+    public Recipe(String recipeName) {
+        this.recipeName = recipeName;
+        setRecipeIngredients(new ArrayList<>());
+        setCategories(new HashSet<>());
     }
 
     public String getRecipeName() {

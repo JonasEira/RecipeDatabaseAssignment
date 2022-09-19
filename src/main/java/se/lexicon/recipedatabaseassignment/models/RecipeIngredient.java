@@ -14,8 +14,11 @@ public class RecipeIngredient {
     Ingredient ingredient;
     double amount;
     Measurement measurement;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     Recipe recipe;
+
+    public RecipeIngredient() {
+    }
 
     public RecipeIngredient(Ingredient ingredient, double amount, Measurement measurement, Recipe recipe) {
         this.ingredient = ingredient;
