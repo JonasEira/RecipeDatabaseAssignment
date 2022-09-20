@@ -35,11 +35,8 @@ public class MyCommandLineRunner implements CommandLineRunner {
         RecipeIngredient recWater = new RecipeIngredient(water, 1.0, Measurement.CL, saltWaterRecipe);
         recIngRepo.save(recSalt);
         recIngRepo.save(recWater);
-        List<RecipeIngredient> ingredients = new ArrayList<>();
-        ingredients.add(recSalt);
-        ingredients.add(recWater);
-        saltWaterRecipe.setRecipeIngredients(ingredients);
-
+        saltWaterRecipe.addIngredient(recSalt);
+        saltWaterRecipe.addIngredient(recWater);
         ingreRepo.findAll().forEach(System.out::println);
         recRepo.findAll().forEach(System.out::println);
 

@@ -14,7 +14,9 @@ public class RecipeIngredient {
     Ingredient ingredient;
     double amount;
     Measurement measurement;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.DETACH}
+            , fetch = FetchType.EAGER)
+    @JoinColumn(name = "recipe_id")
     Recipe recipe;
 
     public RecipeIngredient() {
@@ -66,7 +68,6 @@ public class RecipeIngredient {
                 ", ingredient=" + ingredient +
                 ", amount=" + amount +
                 ", measurement=" + measurement +
-                ", recipe=" + recipe +
                 '}';
     }
 }

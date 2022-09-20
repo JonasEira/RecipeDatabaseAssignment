@@ -11,7 +11,7 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String recipeName;
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
     List<RecipeIngredient> recipeIngredients;
     @OneToOne
     RecipeInstruction instruction;
@@ -40,6 +40,11 @@ public class Recipe {
 
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
+    }
+
+    public void addIngredient(RecipeIngredient recIngredient) {
+        this.recipeIngredients.add(recIngredient);
+        recIngredient.setRecipe(this);
     }
 
     public List<RecipeIngredient> getRecipeIngredients() {
